@@ -1,3 +1,5 @@
+const formButton = document.querySelector('.button');
+const searchElement = document.querySelector('#location');
 const key = '55JLVRQAYP78BLMK2WPVYX9FK';
 
 async function getWeather(location) {
@@ -12,36 +14,39 @@ async function getWeather(location) {
   }
 }
 
+formButton.addEventListener('click', () => {
+  (async function () {
+    const res = await getWeather(searchElement.value);
+
+    let dayData = {
+      dateTime: res.days[0].datetime,
+      maxTemp: res.days[0].tempmax,
+      minTemp: res.days[0].tempmin,
+      windSpeed: res.days[0].windspeed,
+    };
+
+    console.log('Day Data:');
+    console.log(dayData);
+  })();
+
+  (async function () {
+    const res = await getWeather(searchElement.value);
+
+    let currentData = {
+      feelsLike: res.currentConditions.feelslike,
+      temperature: res.currentConditions.temp,
+      uvIndex: res.currentConditions.uvindex,
+      dateTime: res.currentConditions.datetime,
+    };
+
+    console.log('Current conditions:');
+    console.log(currentData);
+  })();
+});
+
 /*
     Option 1:
 */
-(async function () {
-  const res = await getWeather('chandler');
-
-  let dayData = {
-    dateTime: res.days[1].datetime,
-    maxTemp: res.days[1].tempmax,
-    minTemp: res.days[1].tempmin,
-    windSpeed: res.days[1].windspeed,
-  };
-
-  console.log('Day Data:');
-  console.log(dayData);
-})();
-
-(async function () {
-  const res = await getWeather('chandler');
-
-  let currentData = {
-    feelsLike: res.currentConditions.feelslike,
-    temperature: res.currentConditions.temp,
-    uvIndex: res.currentConditions.uvindex,
-    dateTime: res.currentConditions.datetime,
-  };
-
-  console.log('Current conditions:');
-  console.log(currentData);
-})();
 
 /*
     Option 2:
